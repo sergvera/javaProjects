@@ -6,35 +6,27 @@
 
    <modelVersion>4.0.0</modelVersion>
    <groupId>com.template</groupId>
-   <artifactId>template-spring-primefaces-war</artifactId>
+   <artifactId>template-backend</artifactId>
    <version>1</version>
-   <packaging>war</packaging>
+   <packaging>jar</packaging>
 
-   <name>Template Spring Primefaces war</name>
+   <name>Template backend jar</name>
    
-   <repositories>
-      <repository>  
-        <id>prime-repo</id>  
-        <name>PrimeFaces Maven Repository</name>  
-        <url>http://repository.primefaces.org</url>  
-        <layout>default</layout>  
-      </repository> 
-  </repositories>
 
   <properties>
       <org.springframework.version>3.1.3.RELEASE</org.springframework.version>
    </properties>
    
    <dependencies>
-
-        <dependency>  
-            <groupId>org.primefaces</groupId>  
-            <artifactId>primefaces</artifactId>  
-            <version>3.4.2</version>  
-        </dependency> 
-
-        
-    
+		
+		
+		<dependency>
+			<groupId>log4j</groupId>
+			<artifactId>log4j</artifactId>
+			<version>1.2.17</version>
+		</dependency>
+   
+   
          <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -66,7 +58,6 @@
             <version>${org.springframework.version}</version>
          </dependency>
        
-
          <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
@@ -120,9 +111,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${org.springframework.version}</version>
-         </dependency>
-         
-        
+         </dependency>   
       
+		<dependency>
+		  <groupId>junit</groupId>
+		  <artifactId>junit</artifactId>
+		  <version>4.8.1</version>
+		  <scope>test</scope>
+		</dependency>
    </dependencies>
 </project>
