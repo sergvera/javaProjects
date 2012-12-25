@@ -16,6 +16,10 @@
 
 	<context:annotation-config />
 	<mvc:annotation-driven />
+
+	<!-- This tag allows for mapping the DispatcherServlet to "/" (thus overriding 
+		the mapping of the container's default Servlet), while still allowing static 
+		resource requests to be handled by the container's default Servlet. -->
 	<mvc:default-servlet-handler />
 
 
