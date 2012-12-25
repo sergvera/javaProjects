@@ -1,23 +1,32 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-	<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Home</title>
+<title>Simple form success</title>
+
+
 </head>
 <body>
-	Home!
+	<h2>Simple Spring's form tags example</h2>
 
-	<div>
-		<a href="<c:url value='/helloWorld'/>">Hello world</a>
-	</div>
+	<div>Correct password: 'mypass'</div>
 
-	<div>
-		<a href="<c:url value='/simpleForm'/>">Simple Form (With validation)</a>
-	</div>
 	
+		<div>
+			UserName :
+			${customer.name}
+
+		</div>
+
+		<div>
+			Password :
+			${customer.password}
+		</div>
+
 
 
 </body>

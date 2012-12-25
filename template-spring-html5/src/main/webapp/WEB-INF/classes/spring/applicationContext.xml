@@ -11,7 +11,9 @@
     http://www.springframework.org/schema/aop    
     http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	<!-- Scans all classes under como.template for autowiring on Spring -->
-	<context:component-scan base-package="com.template" />
+	<bean name="customerValidator" class="com.template.model.validator.CustomerValidator" />
+
+
+
 
 </beans>
