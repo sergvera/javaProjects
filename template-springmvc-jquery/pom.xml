@@ -5,11 +5,11 @@
 
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.template</groupId>
-	<artifactId>template-SpringMVC-simple-war</artifactId>
+	<artifactId>template-SpringMVC-jquery-war</artifactId>
 	<version>1</version>
 	<packaging>war</packaging>
 
-	<name>template-SpringMVC-simple-war</name>
+	<name>template-SpringMVC-jquery-war</name>
 
 
 	<properties>
@@ -31,6 +31,18 @@
 
     
 	<dependencies>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>${hibernate.validator.version}</version>
+        </dependency>
 
 		<!-- spring mvc -->
 		<dependency>
