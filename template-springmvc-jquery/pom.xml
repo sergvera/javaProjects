@@ -33,16 +33,18 @@
     
 	<dependencies>
 
+       
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
-            <version>${jackson.version}</version>
+            <version>1.9.9</version>
         </dependency>
 
+        <!-- Hibernate's Bean Validation (JSR-303) reference implementation. -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-validator</artifactId>
-            <version>${hibernate.validator.version}</version>
+            <version>4.3.0.Final</version>
         </dependency>
 
 		<!-- spring mvc -->

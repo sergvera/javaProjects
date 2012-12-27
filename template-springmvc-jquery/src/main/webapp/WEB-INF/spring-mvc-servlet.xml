@@ -35,7 +35,7 @@
 
 
 	<!-- A simple, straightforward mapping (without controller) -->
-	<mvc:view-controller path="/" view-name="home" />
+	<mvc:view-controller path="/"  view-name="home" />
 
 
 	<!-- ============================================================== -->

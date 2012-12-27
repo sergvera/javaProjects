@@ -1,8 +1,15 @@
 package com.template.model;
 
-public class Customer {
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
+public class Customer {
+	
+	@NotNull
 	String name;
+	
+	@NotNull
+	@Pattern(regexp="^mypass$")
 	String password;
 
 	public String getName() {
