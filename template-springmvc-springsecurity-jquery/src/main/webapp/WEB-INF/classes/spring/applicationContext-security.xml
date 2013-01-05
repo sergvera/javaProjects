@@ -1,0 +1,42 @@
+<beans:beans xmlns="http://www.springframework.org/schema/security" xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+           http://www.springframework.org/schema/security
+           http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<!-- css, js, login,logout and accessDenied page are skipped -->
+	<http pattern="/css/**" security="none" />
+	<http pattern="/js/**" security="none" />
+	<http pattern="/login*" security="none" />
+
+
+	<!-- This is where we configure Spring-Security -->
+	<http auto-config="true" access-denied-page="/login?error=Accessdenied" use-expressions="true">
+
+		<intercept-url pattern="/simpleAjaxForm" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/start" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/menu" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/*json" access="hasRole('ROLE_ADMIN')" />
+		<intercept-url pattern="/**"  access="denyAll" />
+
+		<form-login login-page="/login" authentication-failure-url="/login?error=true" default-target-url="/start" />
+
+		<logout invalidate-session="true" logout-success-url="/login" logout-url="/logout" />
+
+	</http>
+
+	<!-- Declare an authentication-manager to use a custom userDetailsService -->
+	<authentication-manager>
+		<authentication-provider user-service-ref="myUserDetailsService">
+			<!-- <password-encoder ref="passwordEncoder" /> -->
+		</authentication-provider>
+	</authentication-manager>
+
+	<!-- Use a Md5 encoder since the user's passwords are stored as Md5 in the database -->
+	<!-- <beans:bean class="org.springframework.security.authentication.encoding.Md5PasswordEncoder" id="passwordEncoder" /> -->
+
+	<!-- A custom service where Spring will retrieve users and their corresponding access levels -->
+	<beans:bean id="myUserDetailsService" class="com.template.security.UserDetailsService" />
+</beans:beans>

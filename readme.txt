@@ -24,6 +24,9 @@ template-springmvc-jquery:
     (Does not use spring security)  
     
 
+template-springmvc-springsecurity-jquery
+ Based in template-springmvc-jquery, but with spring security and a virtual database of users set up
+
 template-spring-primefaces:
     Incomplete project with only good wishes.
 
