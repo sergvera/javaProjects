@@ -8,6 +8,8 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Hello World</title>
 </head>
-<body>Spring MVC says to you: ${message}
+<body>
+	Spring MVC says to you!!!!: ${message}
+	<img src="images/kumu_gif_small.gif">
 </body>
 </html>

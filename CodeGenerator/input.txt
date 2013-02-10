@@ -1,0 +1,30 @@
+//INPUT:
+//  Lines starting with // are ignored
+// Shoudl always  Start with Table Name: <tableName> theTableName
+// Optionally, the object name: <objectName> theObjectName  
+//(if <objectName> is not found, tableName will be used as objectName)
+// then each Type + field
+//If the field is a primary key, start the line with the tag <PK>
+//Example:
+//TableName
+//String field1
+//Integer field2
+//BigDecimal field3
+//We replace VARCHAR->String, INT->Integer, Char->Character
+
+
+//table name
+<tableName> privilegios
+<objectName> privilegio
+
+//<basePackage> TODO
+//<subPackage> TODO
+
+
+//fields
+<PK> VARCHAR privilegios_id
+VARCHAR	categoria
+VARCHAR	funcion
+INT	nivel
+CHAR	switch
+    
