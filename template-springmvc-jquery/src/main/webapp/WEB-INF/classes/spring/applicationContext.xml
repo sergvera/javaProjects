@@ -11,12 +11,5 @@
     http://www.springframework.org/schema/aop    
     http://www.springframework.org/schema/aop/spring-aop.xsd">
 
-	
-<<<<<<< HEAD:template-spring-html5/src/main/webapp/WEB-INF/classes/spring/applicationContext.xml
-=======
-
-
-
->>>>>>> origin/master:template-springmvc-jquery/src/main/webapp/WEB-INF/classes/spring/applicationContext.xml
 
 </beans>
