@@ -20,6 +20,16 @@ public class ObjectField {
     }
 
     
+    public String getFieldGetter() {
+        return "get"+getCapitalizedFieldName()+"()";
+    }
+    
+    public String getFieldSetter() {
+        return "set"+getCapitalizedFieldName()+"("+getTranslatedFieldType()+" value)";
+    }
+    
+    
+    
     
     public String getFieldName() {
         return fieldName;
@@ -28,6 +38,8 @@ public class ObjectField {
     public void setFieldName(String fieldName) {
         this.fieldName = fieldName;
     }
+    
+    
 
     public String getCapitalizedFieldName()
     {

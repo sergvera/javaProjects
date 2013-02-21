@@ -14,6 +14,7 @@ import org.apache.commons.logging.LogFactory;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
 import org.stringtemplate.v4.STGroupDir;
+import org.stringtemplate.v4.STGroupFile;
 
 /**
  *
@@ -30,10 +31,17 @@ public class CodeGenerator {
             ObjectToGenerate objectToGenerate = readInputFile();
 
             //code generation 
-            STGroup group = new STGroupDir("src/main/resources");
 
 
-            generateRowMapper(objectToGenerate, group);
+            log.info("Printing: Domain object");
+
+            generateDomainObject(objectToGenerate);
+
+            log.info("Printing: Row Mapper");
+
+            generateRowMapper(objectToGenerate);
+
+
 
 
         } catch (Exception e) {
@@ -41,8 +49,81 @@ public class CodeGenerator {
         }
     }
 
-    public void generateRowMapper(ObjectToGenerate objectToGenerate, STGroup group) {
+    public void generateDomainObject(ObjectToGenerate objectToGenerate) {
+        STGroup group = new STGroupFile("src/main/resources/DomainObject.stg");
+        group.verbose = true;
+        
+        ST st = null;
 
+        //constructor content
+        StringBuffer constructorContent = new StringBuffer();
+        for (ObjectField field : objectToGenerate.getAllfields()) {
+            st = group.getInstanceOf("objectConstructorContent");
+            st.add("fieldName", field.getFieldName());
+
+            constructorContent.append(st.render());
+        }
+
+        //constructor
+        StringBuffer constructors = new StringBuffer();
+        st = group.getInstanceOf("objectConstructors");
+        st.add("objectName", objectToGenerate.getObjectName());
+        st.add("allFieldsCommaSeparated", objectToGenerate.getAllFieldsAndType_commaSeparated());
+        st.add("constructorContent", constructorContent);
+
+        constructors.append(st.render());
+
+        //object fields
+        StringBuffer objectFields = new StringBuffer();
+        for (ObjectField field : objectToGenerate.getAllfields()) {
+            st = group.getInstanceOf("objectFields");
+            st.add("fieldType", field.getTranslatedFieldType());
+            st.add("fieldName", field.getFieldName());
+
+            objectFields.append(st.render());
+        }
+
+        //object getters
+        StringBuffer objectGetters = new StringBuffer();
+        for (ObjectField field : objectToGenerate.getAllfields()) {
+            st = group.getInstanceOf("fieldGetter");
+            st.add("fieldType", field.getTranslatedFieldType());
+            st.add("capitalizedfieldName", field.getCapitalizedFieldName());
+            st.add("fieldName", field.getFieldName());
+
+            objectGetters.append(st.render());
+        }
+
+        //object setters
+        StringBuffer objectSetters = new StringBuffer();
+        for (ObjectField field : objectToGenerate.getAllfields()) {
+            st = group.getInstanceOf("fieldSetter");
+            st.add("fieldType", field.getTranslatedFieldType());
+            st.add("capitalizedfieldName", field.getCapitalizedFieldName());
+            st.add("fieldName", field.getFieldName());
+
+            objectSetters.append(st.render());
+        }
+
+        //final object
+        st = group.getInstanceOf("objectDomain");
+
+        st.add("domainPackage", objectToGenerate.getDomainPackage());
+        st.add("objectName", objectToGenerate.getObjectName());
+        st.add("fields", objectFields);
+        st.add("constructors", constructors);
+        st.add("getters", objectGetters);
+        st.add("setters", objectSetters);
+        
+
+        System.out.println(st.render(120));
+    }
+
+    public void generateRowMapper(ObjectToGenerate objectToGenerate) {
+        //STGroup group = new STGroupDir("src/main/resources");
+        STGroup group = new STGroupFile("src/main/resources/RowMapper.stg");
+        
+         group.verbose = true;
         //generate rowMapper fields
         StringBuffer rowMapperSetters = new StringBuffer();
         ST st = null;
@@ -50,7 +131,7 @@ public class CodeGenerator {
         for (ObjectField field : objectToGenerate.getAllfields()) {
 
             st = group.getInstanceOf("rowMapperSetField");
-            group.verbose=true;
+           
 
             if (field.getFieldType().equalsIgnoreCase("char")) {
                 st = group.getInstanceOf("rowMapperSetFieldChar");
@@ -113,13 +194,69 @@ public class CodeGenerator {
                     continue;
 
                 }
-
+                //reads object name
                 if (line.trim().startsWith("<objectName>")) {
 
                     line = line.substring(line.indexOf("<objectName>") + "<objectName>".length()).trim();
                     String newObjectName = StringUtils.capitalize(line).trim();
                     log.debug("Overwriting object name, it was:" + result.getObjectName() + " now it will be:" + newObjectName);
                     result.setObjectName(newObjectName);
+
+                    //reads next line
+                    line = br.readLine();
+
+                    continue;
+                }
+
+                //package name
+                if (line.trim().startsWith("<basePackage>")) {
+
+                    line = line.substring(line.indexOf("<basePackage>") + "<basePackage>".length()).trim();
+                    String basePackage = line.trim();
+                    log.debug("Base package name:" + basePackage);
+                    result.setBasePackage(basePackage);
+
+                    //reads next line
+                    line = br.readLine();
+
+                    continue;
+                }
+
+                //dao name
+                if (line.trim().startsWith("<daoPackage>")) {
+
+                    line = line.substring(line.indexOf("<daoPackage>") + "<daoPackage>".length()).trim();
+                    String daoPackage = line.trim();
+                    log.debug("dao package name:" + daoPackage);
+                    result.setDaoPackage(daoPackage);
+
+                    //reads next line
+                    line = br.readLine();
+
+                    continue;
+                }
+
+                //domain name
+                if (line.trim().startsWith("<domainPackage>")) {
+
+                    line = line.substring(line.indexOf("<domainPackage>") + "<domainPackage>".length()).trim();
+                    String domainPackage = line.trim();
+                    log.debug("domain package name:" + domainPackage);
+                    result.setDomainPackage(domainPackage);
+
+                    //reads next line
+                    line = br.readLine();
+
+                    continue;
+                }
+
+                //service name
+                if (line.trim().startsWith("<servicePackage>")) {
+
+                    line = line.substring(line.indexOf("<servicePackage>") + "<servicePackage>".length()).trim();
+                    String servicePackage = line.trim();
+                    log.debug("service package name:" + servicePackage);
+                    result.setServicePackage(servicePackage);
 
                     //reads next line
                     line = br.readLine();

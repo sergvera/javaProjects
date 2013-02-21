@@ -17,9 +17,10 @@
 <tableName> privilegios
 <objectName> privilegio
 
-//<basePackage> TODO
-//<subPackage> TODO
-
+<basePackage> com.hcolonial.
+<daoPackage> dao.sistema
+<domainPackage> model.sistema
+<servicePackage> controller.sistema
 
 //fields
 <PK> VARCHAR privilegios_id

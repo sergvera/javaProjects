@@ -1,0 +1,64 @@
+
+objectFields(fieldType, fieldName) ::=
+"private <fieldType> <fieldName>;<\n>"
+
+objectConstructors(objectName, allFieldsCommaSeparated, constructorContent) ::= <<
+
+public <objectName>()
+{
+    super();
+}
+
+public <objectName>(<allFieldsCommaSeparated>)
+{
+    super();
+    <constructorContent>
+}
+
+>>
+
+
+objectConstructorContent(fieldName) ::=
+"this.<fieldName>=<fieldName>;<\n>"
+
+
+
+fieldGetter(fieldType, capitalizedfieldName,fieldName) ::= <<
+
+public <fieldType> get<capitalizedfieldName>()
+{
+    return <fieldName>;
+}
+<\n>
+>>
+
+fieldSetter(fieldType, capitalizedfieldName,fieldName) ::= <<
+
+public void set<capitalizedfieldName>(<fieldType> value)
+{
+    this.<fieldName>=value;
+}
+<\n>
+
+>>
+
+
+objectDomain(domainPackage, objectName, fields, getters, setters, constructors) ::= <<
+package <domainPackage>;
+
+/**
+ * <objectName>
+ */
+public class <objectName> {
+
+	<fields>
+        <\n><\n>
+        <constructors>
+	<\n>
+	<getters>
+        <\n>
+        <setters>
+
+}
+>>
+

@@ -1,4 +1,19 @@
 
+rowMapperSetFieldChar(fieldName, resultSetFieldType) ::= <<
+
+String <fieldName>AsString = rs.getString("<fieldName>");
+if(<fieldName>AsString.length()>0)
+{
+    result.set<fieldName> (<fieldName>AsString.charAt(0));
+}
+
+>>
+
+
+rowMapperSetField(fieldName, resultSetFieldType) ::=
+"result.set<fieldName> (rs.get<resultSetFieldType>(\"<fieldName>\"));<\n>"
+
+
 rowMapper(objectName, fields) ::= <<
         /** <objectName> **/
 	public static final class <objectName>Mapper implements RowMapper\<<objectName>\> {
