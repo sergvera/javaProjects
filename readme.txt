@@ -8,6 +8,9 @@ I tried to have bare-bones functionality in each one.
 
 Descriptions:
 
+CodeGenerator:  
+A generator for Spring jdbcTemplaet suported daos. Still incomplet and quite ugly.
+
 template-basicWebApp: 
     A simple bare bones java web app. Encodes all output to utf-8, but nothing more.
 
