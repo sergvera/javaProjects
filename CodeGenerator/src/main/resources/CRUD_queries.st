@@ -1,4 +1,9 @@
-CRUD_queries ::= <<
-dao.<objectName>Dao.retrieve<objectName>=SELECT <fields> FROM <tableName> WHERE <pkFields>
+CRUD_queries(objectNameLowerCase, objectNameUpperCase, tableName, tableFieldNamesCommaSeparated,tableFieldNamesCommaSeparatedWithParam , PKFieldsWithParamANDSeparated) ::= <<
+dao.<objectNameLowerCase>Dao.insert<objectNameUpperCase>=INSERT INTO <tableName> (<tableFieldNamesCommaSeparated>) VALUES (?, ?);
+dao.<objectNameLowerCase>Dao.update<objectNameUpperCase>=UPDATE <tableName> SET <tableFieldNamesCommaSeparatedWithParam>  WHERE <PKFieldsWithParamANDSeparated>;
+dao.<objectNameLowerCase>Dao.exists<objectNameUpperCase>=SELECT COUNT(*) FROM <tableName> WHERE <PKFieldsWithParamANDSeparated>
+dao.<objectNameLowerCase>Dao.retrieve<objectNameUpperCase>=SELECT <tableFieldNamesCommaSeparated> FROM <tableName> where <PKFieldsWithParamANDSeparated>;
+dao.<objectNameLowerCase>Dao.selectAll<objectNameUpperCase>=SELECT <tableFieldNamesCommaSeparated> FROM <tableName>;
+dao.<objectNameLowerCase>Dao.delete<objectNameUpperCase>=DELETE FROM <tableName> WHERE <PKFieldsWithParamANDSeparated>;
 >>
 

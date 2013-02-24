@@ -1,51 +1,148 @@
-objectDao(objectName, fields) ::= <<
-
-/**
- * 
+objectDaoInterface(packageName,objectName, instanceName, fields, pkFields) ::= <<
+/*
  */
-package <daopackage>;
+package <packageName>;
 
+import com.hcolonial.model.sistema.<objectName>;
 import java.util.List;
 
+/**
+ */
+public interface <objectName>DaoInterface {
+
+    void saveOrUpdate(<objectName> <instanceName>, StringBuffer actionLog);
+
+    void delete(<objectName> <instanceName>, StringBuffer actionLog);
+
+    Boolean exists(<objectName> <instanceName>, StringBuffer actionLog);
+
+    void insert(<objectName> <instanceName>, StringBuffer actionLog);
+
+    <objectName> retrieve(<objectName> <instanceName>, StringBuffer actionLog);
+
+    List<<objectName>> selectAll( StringBuffer actionLog);
+
+    void update(<objectName> <instanceName>, StringBuffer actionLog);
+}
+
+>>
+
+objectDao(packageName,objectName, objectNameLowerCase, instanceName, fields, pkFields, instanceDotGetPK, instanceDotGetFields) ::= <<
+
+/**
+ *
+ */
+package <packageName>;
+
+import com.hcolonial.dao.RowMappers;
+import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
-import org.springframework.util.Assert;
-
 
 /**
- * 
+ *
  *
  */
 public class <objectName>Dao extends JdbcDaoSupport implements <objectName>DaoInterface {
 
-	private transient static Log log = LogFactory.getLog(<objectName>Dao.class.getName());
+    private transient static Log log = LogFactory.getLog(<objectName>Dao.class.getName());
+    @Value("${dao.<objectNameLowerCase>Dao.insert<objectName>}")
+    private String query_insert<objectName>;
+    @Value("${dao.<objectNameLowerCase>Dao.update<objectName>}")
+    private String query_update<objectName>;
+    @Value("${dao.<objectNameLowerCase>Dao.exists<objectName>}")
+    private String query_exists<objectName>;
+    @Value("${dao.<objectNameLowerCase>Dao.retrieve<objectName>}")
+    private String query_retrieve<objectName>;
+    @Value("${dao.<objectNameLowerCase>Dao.selectAll<objectName>}")
+    private String query_selectAll<objectName>;
+    @Value("${dao.<objectNameLowerCase>Dao.delete<objectName>}")
+    private String query_delete<objectName>;
 
-	@Value("${dao.<objectName>Dao.retrieve<objectName>}")
-	private String query_retrieve<objectName>;
+    @Override
+    public void saveOrUpdate(<objectName> <instanceName>, StringBuffer actionLog) {
+        if (this.exists(<instanceName>,actionLog)) {
+            log.debug("Updating:" + <instanceName>);
+            actionLog.insert(0,"Updating:" + <instanceName>+"<br/>");
+            this.update(<instanceName>,actionLog);
+        } else {
+            log.debug("Creating:" + <instanceName>);
+            actionLog.insert(0,"Creating:" + <instanceName>+"<br/>");
+            this.insert(<instanceName>,actionLog);
+        }
+    }
 
-	/** 
-	 * 
-	 */
-	@Override
-	public <objectName> retrieve<objectName>(String id) {
-            
-		log.debug("Executing:" + query_retrieve<objectName> + " with params: " + id);
+    @Override
+    public void insert(<objectName> <instanceName>, StringBuffer actionLog) {
+        log.debug("Executing:" + query_insert<objectName> + " with params: " + <instanceName>);
+        actionLog.insert(0,"Executing:" + query_insert<objectName> + " with params: " + <instanceName>+"<br/>");
+        super.getJdbcTemplate().update(query_insert<objectName>, new Object[]{<instanceDotGetFields>});
+    }
 
-		List\<<objectName>\> resultList = super.getJdbcTemplate().query(query_retrieve<objectName>, new Object[] { id },
-				new RowMappers.<objectName>Mapper());
+    @Override
+    public void update(<objectName> <instanceName>, StringBuffer actionLog) {
+        log.debug("Executing:" + query_update<objectName> + " with params: " + <instanceName>);
+        actionLog.insert(0,"Executing:" + query_update<objectName> + " with params: " + <instanceName>+"<br/>");
+        super.getJdbcTemplate().update(query_update<objectName>, new Object[]{<instanceDotGetFields>,<instanceDotGetPK>});
+    }
 
-		if (resultList.size() == 0) {
-			return null;
-		}
+    @Override
+    public Boolean exists(<objectName> <instanceName>, StringBuffer actionLog) {
+        log.debug("Executing:" + query_exists<objectName> + " with params: " + <instanceName>);
+         actionLog.insert(0,"Executing:" + query_exists<objectName> + " with params: " + <instanceName>+"<br/>");
+        int count = super.getJdbcTemplate().queryForInt(query_exists<objectName>, new Object[]{<instanceDotGetPK>});
 
-		return resultList.get(0);
+        log.debug("Conteo:" + count);
+        actionLog.insert(0,"Conteo:" + count+"<br/>");
+        if (count > 1) {
+            throw new RuntimeException(count + " registros de <objectName> encontrados");
+        }
 
-	}
+        if (count == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    @Override
+    public <objectName> retrieve(<objectName> <instanceName>, StringBuffer actionLog) {
+        log.debug("Executing:" + query_retrieve<objectName> + " with params: " + <instanceName>);
+        actionLog.insert(0,"Executing:" + query_retrieve<objectName> + " with params: " + <instanceName>+"<br/>");
+        <objectName> result = null;
+        result = super.getJdbcTemplate().queryForObject(query_retrieve<objectName>, new Object[]{<instanceDotGetPK>} , new RowMappers.<objectName>Mapper());
+        log.debug("Recuperando:" + result);
+        actionLog.insert(0,"Recuperando:" + result+"<br/>");
+        return result;
+    }
+
+    @Override
+    public List<<objectName>> selectAll(StringBuffer actionLog) {
+
+        log.debug("Executing:" + query_selectAll<objectName> + " with no params");
+        actionLog.insert(0,"Executing:" + query_selectAll<objectName> + " with no params"+"<br/>");
+
+        List<<objectName>> resultList = super.getJdbcTemplate().query(query_selectAll<objectName>, new RowMappers.<objectName>Mapper());
+
+        log.debug("Select all, count:" + resultList.size());
+        actionLog.insert(0,"Select all, count:" + resultList.size());
+
+        if (resultList.size() == 0) {
+            return null;
+        }
+
+        return resultList;
+    }
+
+    @Override
+    public void delete(<objectName> <instanceName>, StringBuffer actionLog) {
+        log.debug("Executing:" + query_delete<objectName> + " with params: " + <instanceName>);
+        actionLog.insert(0,"Executing:" + query_delete<objectName> + " with params: " + <instanceName>+"<br/>");
+        super.getJdbcTemplate().update(query_delete<objectName>, new Object[]{<instanceDotGetPK>});
+    }
 }
-
-
 
 >>
 

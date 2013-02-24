@@ -14,8 +14,8 @@
 
 
 //table name
-<tableName> privilegios
-<objectName> privilegio
+<tableName> funciones
+<objectName> funcion
 
 <basePackage> com.hcolonial.
 <daoPackage> dao.sistema
@@ -23,9 +23,5 @@
 <servicePackage> controller.sistema
 
 //fields
-<PK> VARCHAR privilegios_id
-VARCHAR	categoria
-VARCHAR	funcion
-INT	nivel
-CHAR	switch
-    
+<PK> VARCHAR funcion
+VARCHAR	nombre

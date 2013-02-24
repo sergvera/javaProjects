@@ -1,6 +1,9 @@
 
 objectFields(fieldType, fieldName) ::=
-"private <fieldType> <fieldName>;<\n>"
+<<
+@NotBlank
+private <fieldType> <fieldName>;<\n>
+>>
 
 objectConstructors(objectName, allFieldsCommaSeparated, constructorContent) ::= <<
 
