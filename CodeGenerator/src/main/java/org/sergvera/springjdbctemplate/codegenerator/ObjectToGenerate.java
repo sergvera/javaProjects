@@ -20,6 +20,9 @@ public class ObjectToGenerate {
     private String daoPackage;
     private String domainPackage;
     private String servicePackage;
+    
+    private String webPath;
+
 
     private List<ObjectField> pkfields = new ArrayList<ObjectField>();
     private List<ObjectField> fields = new ArrayList<ObjectField>();
@@ -198,5 +201,14 @@ public class ObjectToGenerate {
 
     public void setServicePackage(String servicePackage) {
         this.servicePackage = servicePackage;
+    }
+    
+    
+    public String getWebPath() {
+        return webPath;
+    }
+
+    public void setWebPath(String webPath) {
+        this.webPath = webPath;
     }
 }

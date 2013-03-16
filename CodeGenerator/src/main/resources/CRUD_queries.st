@@ -1,5 +1,5 @@
 CRUD_queries(objectNameLowerCase, objectNameUpperCase, tableName, tableFieldNamesCommaSeparated,tableFieldNamesCommaSeparatedWithParam , PKFieldsWithParamANDSeparated) ::= <<
-dao.<objectNameLowerCase>Dao.insert<objectNameUpperCase>=INSERT INTO <tableName> (<tableFieldNamesCommaSeparated>) VALUES (?, ?);
+dao.<objectNameLowerCase>Dao.insert<objectNameUpperCase>=INSERT INTO <tableName> (<tableFieldNamesCommaSeparated>) VALUES (<AllfieldsAsQuestionMArks>);
 dao.<objectNameLowerCase>Dao.update<objectNameUpperCase>=UPDATE <tableName> SET <tableFieldNamesCommaSeparatedWithParam>  WHERE <PKFieldsWithParamANDSeparated>;
 dao.<objectNameLowerCase>Dao.exists<objectNameUpperCase>=SELECT COUNT(*) FROM <tableName> WHERE <PKFieldsWithParamANDSeparated>
 dao.<objectNameLowerCase>Dao.retrieve<objectNameUpperCase>=SELECT <tableFieldNamesCommaSeparated> FROM <tableName> where <PKFieldsWithParamANDSeparated>;

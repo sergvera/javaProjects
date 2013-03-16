@@ -58,6 +58,11 @@ public class ObjectField {
             return "BigDecimal";
         }
         
+        if(fieldType.trim().equalsIgnoreCase("FLOAT") )
+        {
+            return "BigDecimal";
+        }
+        
         if(fieldType.trim().equalsIgnoreCase("INT") )
         {
             return "Int";
@@ -80,6 +85,11 @@ public class ObjectField {
         }
         
         if(fieldType.trim().equalsIgnoreCase("DECIMAL") )
+        {
+            return "BigDecimal";
+        }
+        
+        if(fieldType.trim().equalsIgnoreCase("FLOAT") )
         {
             return "BigDecimal";
         }

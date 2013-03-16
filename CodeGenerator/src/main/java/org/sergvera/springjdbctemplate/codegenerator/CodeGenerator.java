@@ -13,7 +13,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.stringtemplate.v4.ST;
 import org.stringtemplate.v4.STGroup;
-import org.stringtemplate.v4.STGroupDir;
 import org.stringtemplate.v4.STGroupFile;
 
 /**
@@ -41,6 +40,19 @@ public class CodeGenerator {
 
             generateRowMapper(objectToGenerate);
 
+            log.info("Printing: Dao Interface");
+
+            generateDaoInterface(objectToGenerate);
+
+            log.info("Printing: Dao ");
+
+            generateDaoObject(objectToGenerate);
+
+
+            log.info("Printing: Controller ");
+
+            generateObjectController(objectToGenerate);
+
 
 
 
@@ -49,10 +61,73 @@ public class CodeGenerator {
         }
     }
 
+    public void generateObjectController(ObjectToGenerate objectToGenerate) {
+
+        STGroup group = new STGroupFile("src/main/resources/ObjectController.stg");
+
+        group.verbose = true;
+        ST st = null;
+
+
+        //generate code for row mapper
+
+        st = group.getInstanceOf("objectController");
+        st.add("controllerPackage", objectToGenerate.getServicePackage());
+        st.add("daoPackage", objectToGenerate.getDaoPackage());
+        st.add("modelPackage", objectToGenerate.getDomainPackage());
+        st.add("objectName", objectToGenerate.getObjectName());
+        st.add("instanceName", objectToGenerate.getInstanceName());
+        st.add("webPath", objectToGenerate.getWebPath());
+        st.add("objectPkFields", objectToGenerate.getPKFields_InstanceDotGetFieldList_CommaSeparated());
+
+        System.out.println(st.render(120));
+    }
+
+    public void generateDaoObject(ObjectToGenerate objectToGenerate) {
+
+        STGroup group = new STGroupFile("src/main/resources/ObjectDao.stg");
+
+        group.verbose = true;
+        ST st = null;
+
+
+        //generate code for row mapper
+
+        st = group.getInstanceOf("objectDao");
+        st.add("packageName", objectToGenerate.getDaoPackage());
+        st.add("objectName", objectToGenerate.getObjectName());
+        st.add("objectNameLowerCase", objectToGenerate.getObjectName().toLowerCase());
+        st.add("instanceName", objectToGenerate.getInstanceName());
+        st.add("instanceDotGetPK", objectToGenerate.getPKFields_InstanceDotGetFieldList_CommaSeparated());
+        st.add("instanceDotGetAllFields", objectToGenerate.getAllFields_InstanceDotGetFieldList_CommaSeparated());
+
+
+
+        System.out.println(st.render(120));
+    }
+
+    public void generateDaoInterface(ObjectToGenerate objectToGenerate) {
+
+        STGroup group = new STGroupFile("src/main/resources/ObjectDao.stg");
+
+        group.verbose = true;
+        ST st = null;
+
+
+        //generate code for row mapper
+
+        st = group.getInstanceOf("objectDaoInterface");
+        st.add("packageName", objectToGenerate.getDaoPackage());
+        st.add("objectName", objectToGenerate.getObjectName());
+        st.add("instanceName", objectToGenerate.getInstanceName());
+
+        System.out.println(st.render(120));
+    }
+
     public void generateDomainObject(ObjectToGenerate objectToGenerate) {
         STGroup group = new STGroupFile("src/main/resources/DomainObject.stg");
         group.verbose = true;
-        
+
         ST st = null;
 
         //constructor content
@@ -114,7 +189,7 @@ public class CodeGenerator {
         st.add("constructors", constructors);
         st.add("getters", objectGetters);
         st.add("setters", objectSetters);
-        
+
 
         System.out.println(st.render(120));
     }
@@ -122,8 +197,8 @@ public class CodeGenerator {
     public void generateRowMapper(ObjectToGenerate objectToGenerate) {
         //STGroup group = new STGroupDir("src/main/resources");
         STGroup group = new STGroupFile("src/main/resources/RowMapper.stg");
-        
-         group.verbose = true;
+
+        group.verbose = true;
         //generate rowMapper fields
         StringBuffer rowMapperSetters = new StringBuffer();
         ST st = null;
@@ -131,7 +206,7 @@ public class CodeGenerator {
         for (ObjectField field : objectToGenerate.getAllfields()) {
 
             st = group.getInstanceOf("rowMapperSetField");
-           
+
 
             if (field.getFieldType().equalsIgnoreCase("char")) {
                 st = group.getInstanceOf("rowMapperSetFieldChar");
@@ -222,6 +297,22 @@ public class CodeGenerator {
                     continue;
                 }
 
+
+
+                //dao name
+                if (line.trim().startsWith("<webPath>")) {
+
+                    line = line.substring(line.indexOf("<webPath>") + "<webPath>".length()).trim();
+                    String webPath = line.trim();
+                    log.debug("WebPath:" + webPath);
+                    result.setWebPath(webPath);
+
+                    //reads next line
+                    line = br.readLine();
+
+                    continue;
+                }
+
                 //dao name
                 if (line.trim().startsWith("<daoPackage>")) {
 
@@ -275,7 +366,7 @@ public class CodeGenerator {
                 }
 
                 //afterwards, we need to split and have faith people read the instructions...    
-                String[] field = line.split("[ |\t]+");
+                String[] field = line.trim().split("[ |\t]+");
 
                 if (field.length > 2) {
                     throw new RuntimeException("Error, field line was nto split into to 2 elements" + line);

@@ -1,4 +1,5 @@
-objectDaoInterface(packageName,objectName, instanceName, fields, pkFields) ::= <<
+
+objectDaoInterface(packageName,objectName, instanceName) ::= <<
 /*
  */
 package <packageName>;
@@ -20,14 +21,14 @@ public interface <objectName>DaoInterface {
 
     <objectName> retrieve(<objectName> <instanceName>, StringBuffer actionLog);
 
-    List<<objectName>> selectAll( StringBuffer actionLog);
+    List\<<objectName>\> selectAll( StringBuffer actionLog);
 
     void update(<objectName> <instanceName>, StringBuffer actionLog);
 }
 
 >>
 
-objectDao(packageName,objectName, objectNameLowerCase, instanceName, fields, pkFields, instanceDotGetPK, instanceDotGetFields) ::= <<
+objectDao(packageName,objectName, objectNameLowerCase, instanceName, instanceDotGetPK, instanceDotGetAllFields) ::= <<
 
 /**
  *
@@ -65,11 +66,11 @@ public class <objectName>Dao extends JdbcDaoSupport implements <objectName>DaoIn
     public void saveOrUpdate(<objectName> <instanceName>, StringBuffer actionLog) {
         if (this.exists(<instanceName>,actionLog)) {
             log.debug("Updating:" + <instanceName>);
-            actionLog.insert(0,"Updating:" + <instanceName>+"<br/>");
+            actionLog.insert(0,"Updating:" + <instanceName>+"\<br/\>");
             this.update(<instanceName>,actionLog);
         } else {
             log.debug("Creating:" + <instanceName>);
-            actionLog.insert(0,"Creating:" + <instanceName>+"<br/>");
+            actionLog.insert(0,"Creating:" + <instanceName>+"\<br/\>");
             this.insert(<instanceName>,actionLog);
         }
     }
@@ -77,25 +78,25 @@ public class <objectName>Dao extends JdbcDaoSupport implements <objectName>DaoIn
     @Override
     public void insert(<objectName> <instanceName>, StringBuffer actionLog) {
         log.debug("Executing:" + query_insert<objectName> + " with params: " + <instanceName>);
-        actionLog.insert(0,"Executing:" + query_insert<objectName> + " with params: " + <instanceName>+"<br/>");
-        super.getJdbcTemplate().update(query_insert<objectName>, new Object[]{<instanceDotGetFields>});
+        actionLog.insert(0,"Executing:" + query_insert<objectName> + " with params: " + <instanceName>+"\<br/\>");
+        super.getJdbcTemplate().update(query_insert<objectName>, new Object[]{<instanceDotGetAllFields>});
     }
 
     @Override
     public void update(<objectName> <instanceName>, StringBuffer actionLog) {
         log.debug("Executing:" + query_update<objectName> + " with params: " + <instanceName>);
-        actionLog.insert(0,"Executing:" + query_update<objectName> + " with params: " + <instanceName>+"<br/>");
-        super.getJdbcTemplate().update(query_update<objectName>, new Object[]{<instanceDotGetFields>,<instanceDotGetPK>});
+        actionLog.insert(0,"Executing:" + query_update<objectName> + " with params: " + <instanceName>+"\<br/\>");
+        super.getJdbcTemplate().update(query_update<objectName>, new Object[]{<instanceDotGetAllFields>,<instanceDotGetPK>});
     }
 
     @Override
     public Boolean exists(<objectName> <instanceName>, StringBuffer actionLog) {
         log.debug("Executing:" + query_exists<objectName> + " with params: " + <instanceName>);
-         actionLog.insert(0,"Executing:" + query_exists<objectName> + " with params: " + <instanceName>+"<br/>");
+         actionLog.insert(0,"Executing:" + query_exists<objectName> + " with params: " + <instanceName>+"\<br/\>");
         int count = super.getJdbcTemplate().queryForInt(query_exists<objectName>, new Object[]{<instanceDotGetPK>});
 
         log.debug("Conteo:" + count);
-        actionLog.insert(0,"Conteo:" + count+"<br/>");
+        actionLog.insert(0,"Conteo:" + count+"\<br/\>");
         if (count > 1) {
             throw new RuntimeException(count + " registros de <objectName> encontrados");
         }
@@ -110,21 +111,21 @@ public class <objectName>Dao extends JdbcDaoSupport implements <objectName>DaoIn
     @Override
     public <objectName> retrieve(<objectName> <instanceName>, StringBuffer actionLog) {
         log.debug("Executing:" + query_retrieve<objectName> + " with params: " + <instanceName>);
-        actionLog.insert(0,"Executing:" + query_retrieve<objectName> + " with params: " + <instanceName>+"<br/>");
+        actionLog.insert(0,"Executing:" + query_retrieve<objectName> + " with params: " + <instanceName>+"\<br/\>");
         <objectName> result = null;
         result = super.getJdbcTemplate().queryForObject(query_retrieve<objectName>, new Object[]{<instanceDotGetPK>} , new RowMappers.<objectName>Mapper());
         log.debug("Recuperando:" + result);
-        actionLog.insert(0,"Recuperando:" + result+"<br/>");
+        actionLog.insert(0,"Recuperando:" + result+"\<br/\>");
         return result;
     }
 
     @Override
-    public List<<objectName>> selectAll(StringBuffer actionLog) {
+    public List\<<objectName>\> selectAll(StringBuffer actionLog) {
 
         log.debug("Executing:" + query_selectAll<objectName> + " with no params");
-        actionLog.insert(0,"Executing:" + query_selectAll<objectName> + " with no params"+"<br/>");
+        actionLog.insert(0,"Executing:" + query_selectAll<objectName> + " with no params"+"\<br/\>");
 
-        List<<objectName>> resultList = super.getJdbcTemplate().query(query_selectAll<objectName>, new RowMappers.<objectName>Mapper());
+        List\<<objectName>\> resultList = super.getJdbcTemplate().query(query_selectAll<objectName>, new RowMappers.<objectName>Mapper());
 
         log.debug("Select all, count:" + resultList.size());
         actionLog.insert(0,"Select all, count:" + resultList.size());
@@ -139,10 +140,9 @@ public class <objectName>Dao extends JdbcDaoSupport implements <objectName>DaoIn
     @Override
     public void delete(<objectName> <instanceName>, StringBuffer actionLog) {
         log.debug("Executing:" + query_delete<objectName> + " with params: " + <instanceName>);
-        actionLog.insert(0,"Executing:" + query_delete<objectName> + " with params: " + <instanceName>+"<br/>");
+        actionLog.insert(0,"Executing:" + query_delete<objectName> + " with params: " + <instanceName>+"\<br/\>");
         super.getJdbcTemplate().update(query_delete<objectName>, new Object[]{<instanceDotGetPK>});
     }
 }
 
 >>
-

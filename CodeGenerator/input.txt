@@ -14,14 +14,25 @@
 
 
 //table name
-<tableName> funciones
-<objectName> funcion
-
+<tableName> departamentos
+<objectName> departamento
+<webPath> /sistema/departamento
 <basePackage> com.hcolonial.
 <daoPackage> dao.sistema
 <domainPackage> model.sistema
 <servicePackage> controller.sistema
 
 //fields
-<PK> VARCHAR funcion
-VARCHAR	nombre
+<PK>VARCHAR departamento
+VARCHAR nombre
+VARCHAR gerente
+FLOAT iva
+FLOAT impuesto_hotelero
+FLOAT concepto_extra1
+FLOAT concepto_extra2
+FLOAT concepto_extra3
+FLOAT concepto_extra4
+FLOAT concepto_extra5
+INT next_registro
+INT movimiento
+
