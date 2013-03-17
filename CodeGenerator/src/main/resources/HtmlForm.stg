@@ -1,0 +1,31 @@
+
+formField( fieldNameUppercased, fieldName) ::=
+<<
+    \<div class="control-group" id="<fieldName>ControlGroup"\>
+                    <fieldNameUppercased> :
+                    \<form:input path="<fieldName>" maxlength="SET"/\>
+                    \<span class="help-inline"\>\</span\>
+                \</div\>
+<\n>
+>>
+
+form(formFields) ::= <<
+
+    <formFields>
+>>
+
+
+
+jqGridField(fieldNameUppercased,fieldName) ::= <<
+{name:'<fieldName>', label: '<fieldNameUppercased>',  width: 100},<\n>
+>>
+
+jqGrid(jqGridFields) ::= <<
+[<jqGridFields>]  
+>>
+
+
+
+
+
+

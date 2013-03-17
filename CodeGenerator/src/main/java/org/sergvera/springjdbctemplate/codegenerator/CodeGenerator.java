@@ -53,12 +53,74 @@ public class CodeGenerator {
 
             generateObjectController(objectToGenerate);
 
+            log.info("Printing: Form elements ");
 
+            generateHtmlForm(objectToGenerate);
+
+             log.info("Printing: jqGrid form definition ");
+
+            generateJqGrid(objectToGenerate);
 
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
+    }
+    
+     public void generateJqGrid(ObjectToGenerate objectToGenerate) {
+
+        STGroup group = new STGroupFile("src/main/resources/HtmlForm.stg");
+
+        group.verbose = true;
+        ST st = null;
+
+        //constructor content
+        StringBuffer constructorContent = new StringBuffer();
+        for (ObjectField field : objectToGenerate.getAllfields()) {
+            st = group.getInstanceOf("jqGridField");
+            st.add("fieldNameUppercased", field.getCapitalizedFieldName());
+            st.add("fieldName", field.getFieldName());
+
+            constructorContent.append(st.render());
+        }
+        
+        //erases last comma
+        constructorContent.deleteCharAt(constructorContent.lastIndexOf(","));
+        
+        //generate code for row mapper
+
+        
+        
+        st = group.getInstanceOf("jqGrid");
+        st.add("jqGridFields", constructorContent);
+
+
+        System.out.println(st.render(120));
+    }
+
+    public void generateHtmlForm(ObjectToGenerate objectToGenerate) {
+
+        STGroup group = new STGroupFile("src/main/resources/HtmlForm.stg");
+
+        group.verbose = true;
+        ST st = null;
+
+        //constructor content
+        StringBuffer constructorContent = new StringBuffer();
+        for (ObjectField field : objectToGenerate.getAllfields()) {
+            st = group.getInstanceOf("formField");
+            st.add("fieldNameUppercased", field.getCapitalizedFieldName());
+            st.add("fieldName", field.getFieldName());
+
+            constructorContent.append(st.render());
+        }
+        //generate code for row mapper
+
+        st = group.getInstanceOf("form");
+        st.add("formFields", constructorContent);
+
+
+        System.out.println(st.render(120));
     }
 
     public void generateObjectController(ObjectToGenerate objectToGenerate) {

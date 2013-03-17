@@ -1,7 +1,7 @@
 
 objectFields(fieldType, fieldName) ::=
 <<
-@NotBlank
+@NotBlank(message="{notEmpty}")
 private <fieldType> <fieldName>;<\n>
 >>
 
