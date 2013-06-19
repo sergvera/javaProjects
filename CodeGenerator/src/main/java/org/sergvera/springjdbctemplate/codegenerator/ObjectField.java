@@ -53,6 +53,12 @@ public class ObjectField {
             return "String";
         }
         
+        if(fieldType.trim().equalsIgnoreCase("DATE") )
+        {
+            return "Date";
+        }
+        
+        
         if(fieldType.trim().equalsIgnoreCase("DECIMAL") )
         {
             return "BigDecimal";
@@ -82,6 +88,11 @@ public class ObjectField {
         if(fieldType.trim().equalsIgnoreCase("VARCHAR") || fieldType.trim().equalsIgnoreCase("string") )
         {
             return "String";
+        }
+        
+        if(fieldType.trim().equalsIgnoreCase("DATE") )
+        {
+            return "Date";
         }
         
         if(fieldType.trim().equalsIgnoreCase("DECIMAL") )

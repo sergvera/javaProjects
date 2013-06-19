@@ -1,6 +1,6 @@
 //INPUT:
 //  Lines starting with // are ignored
-// Shoudl always  Start with Table Name: <tableName> theTableName
+// Should always  Start with Table Name: <tableName> theTableName
 // Optionally, the object name: <objectName> theObjectName
 //(if <objectName> is not found, tableName will be used as objectName)
 // then each Type + field
@@ -13,31 +13,36 @@
 //We replace VARCHAR->String, INT->Integer, Char->Character
 
 //table name
-<tableName> empresa
-<objectName> empresa
-<webPath> /sistema/empresa
+<tableName> empleado
+<objectName> empleado
+<webPath> /operacion/nomina/mantenimiento/empleado
 <basePackage> com.hcolonial.
-<daoPackage> dao.sistema
-<domainPackage> model.sistema
-<servicePackage> controller.sistema
+<daoPackage> dao.operacion.nomina
+<domainPackage> model.operacion.nomina
+<servicePackage> controller.operacion.nomina
 
 //fields
-<PK>VARCHAR  nombre
- VARCHAR razon_social
- VARCHAR  direccion
- VARCHAR  ciudad
- VARCHAR  pais
- VARCHAR  cp
- VARCHAR  telefono
- VARCHAR  fax
- VARCHAR  rfc
- VARCHAR  imss
- VARCHAR  cta_edo
- VARCHAR  canaco
- INT  gasto
- VARCHAR  reservaciones_id
- FLOAT  sobregiro
- INT  contra_recibo
- FLOAT  com_tc
- VARCHAR  cargo_aut
- FLOAT  impuesto_hotelero 
+<PK>VARCHAR	empleado
+    VARCHAR	nombre
+    VARCHAR	direccion
+    VARCHAR	colonia
+    VARCHAR	cp
+    VARCHAR	estado_civil
+    VARCHAR	rfc
+    VARCHAR	imss
+    VARCHAR	status_empleado
+    VARCHAR	categoria
+    VARCHAR	contrato
+    VARCHAR	tipo
+    DATE	fecha_ingreso
+    DATE	fecha_baja
+    INT         vacaciones
+    INT         vacaciones_tomadas
+    INT         aguinaldo
+    FLOAT	factor_imss
+    FLOAT	salario
+    CHAR	paga_imss
+    CHAR	paga_ispt
+
+
+
