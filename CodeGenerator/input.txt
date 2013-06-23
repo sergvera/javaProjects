@@ -13,31 +13,29 @@
 //We replace VARCHAR->String, INT->Integer, Char->Character
 
 //table name
-<tableName> empresa
-<objectName> empresa
-<webPath> /sistema/empresa
+<tableName> departamentos
+<objectName> departamento
+<webPath> /sistema/departamento
 <basePackage> com.hcolonial.
 <daoPackage> dao.sistema
 <domainPackage> model.sistema
 <servicePackage> controller.sistema
 
 //fields
-<PK>VARCHAR  nombre
- VARCHAR razon_social
- VARCHAR  direccion
- VARCHAR  ciudad
- VARCHAR  pais
- VARCHAR  cp
- VARCHAR  telefono
- VARCHAR  fax
- VARCHAR  rfc
- VARCHAR  imss
- VARCHAR  cta_edo
- VARCHAR  canaco
- INT  gasto
- VARCHAR  reservaciones_id
- FLOAT  sobregiro
- INT  contra_recibo
- FLOAT  com_tc
- VARCHAR  cargo_aut
- FLOAT  impuesto_hotelero 
+<PK>VARCHAR departamento
+VARCHAR nombre
+VARCHAR gerente
+FLOAT iva
+FLOAT impuesto_hotelero
+VARCHAR	nombre_concepto_extra1
+FLOAT	concepto_extra1
+VARCHAR	nombre_concepto_extra2
+FLOAT	concepto_extra2
+VARCHAR	nombre_concepto_extra3
+FLOAT	concepto_extra3
+VARCHAR	nombre_concepto_extra4
+FLOAT	concepto_extra4
+VARCHAR	nombre_concepto_extra5
+FLOAT	concepto_extra5
+INT next_registro
+INT movimiento
