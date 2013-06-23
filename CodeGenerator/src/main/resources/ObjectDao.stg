@@ -4,7 +4,7 @@ objectDaoInterface(packageName,objectName, instanceName) ::= <<
  */
 package <packageName>;
 
-import com.hcolonial.model.sistema.<objectName>;
+import com.hcolonial.model.<objectName>;
 import java.util.List;
 
 /**
