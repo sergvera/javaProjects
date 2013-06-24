@@ -38,7 +38,7 @@ public class <objectName>Controller extends BaseController {
         // command object
         model.addAttribute("<instanceName>", <instanceName>);
         // return form view
-        return "/sistema/<instanceName>";
+        return "<webPath>/<instanceName>";
     }
 
     @RequestMapping(value = "/update.json", method = RequestMethod.POST)
@@ -51,7 +51,7 @@ public class <objectName>Controller extends BaseController {
             result.setResult(<instanceName>);
 
             if (!hasErrors(bindingResult, result)) {
-                
+
                 dao.saveOrUpdate(<instanceName>, result.getActionLog());
                 result.setStatus(GenericJSONResponse.STATUS.SUCCESS.toString());
             }
@@ -74,7 +74,7 @@ public class <objectName>Controller extends BaseController {
             result.setResult(<instanceName>);
 
             if (!hasErrors(bindingResult, result)) {
-                
+
                 if (!dao.exists(<instanceName>, result.getActionLog())) {
                     dao.saveOrUpdate(<instanceName>, result.getActionLog());
                     result.setStatus(GenericJSONResponse.STATUS.SUCCESS.toString());
@@ -100,7 +100,7 @@ public class <objectName>Controller extends BaseController {
 
         try {
             if (!StringUtils.isBlank(<objectPkFields>)) {
-                
+
                 if (dao.exists(<instanceName>, result.getActionLog())) {
                     result.setResult(dao.retrieve(<instanceName>, result.getActionLog()));
                     result.setStatus(GenericJSONResponse.STATUS.SUCCESS.toString());
@@ -149,7 +149,7 @@ public class <objectName>Controller extends BaseController {
         GenericJSONResponse result = new GenericJSONResponse();
         try {
             if (!hasErrors(bindingResult, result)) {
-               
+
                 if (dao.exists(<instanceName>, result.getActionLog())) {
                     result.setResult(new <objectName>());
                     dao.delete(<instanceName>, result.getActionLog());
@@ -174,7 +174,7 @@ public class <objectName>Controller extends BaseController {
         return result;
     }
 
- 
+
 
     public <objectName>DaoInterface getDao() {
         return dao;

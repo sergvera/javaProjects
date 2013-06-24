@@ -20,7 +20,7 @@ public class ObjectToGenerate {
     private String daoPackage;
     private String domainPackage;
     private String servicePackage;
-    
+
     private String webPath;
 
 
@@ -106,7 +106,7 @@ public class ObjectToGenerate {
         }
         return sb.toString();
     }
-    
+
     public String getAllColumns_CommaSeparated() {
          StringBuilder sb = new StringBuilder(getPKColumns_CommaSeparated(false));
 
@@ -118,7 +118,66 @@ public class ObjectToGenerate {
         return sb.toString();
     }
 
-    
+     /**
+     * @return the pkfields
+     */
+    public String getAllFieldsWithQueryParam_commaSeparated() {
+
+        List<ObjectField> allFields = new ArrayList<ObjectField>();
+
+        allFields.addAll(this.pkfields);
+        allFields.addAll(this.fields);
+
+         StringBuilder sb = new StringBuilder();
+
+        for (ObjectField field : allFields) {
+            sb.append( ""+ field.getFieldName()+" =?,");
+        }
+
+        sb.deleteCharAt(sb.lastIndexOf(","));
+        return sb.toString();
+    }
+
+     /**
+     * @return the pkfields
+     */
+    public String getPKFieldsWithQueryParam_SeparatedByAND() {
+
+        List<ObjectField> allFields = new ArrayList<ObjectField>();
+
+        allFields.addAll(this.pkfields);
+
+
+         StringBuilder sb = new StringBuilder();
+
+        for (ObjectField field : allFields) {
+            sb.append( ""+ field.getFieldName()+" =? AND ");
+        }
+
+        sb.delete(sb.lastIndexOf("AND"), sb.lastIndexOf("AND")+3);
+        return sb.toString();
+    }
+
+     public String getAllFieldsAsQuestionsMarks() {
+
+        List<ObjectField> allFields = new ArrayList<ObjectField>();
+
+        allFields.addAll(this.pkfields);
+        allFields.addAll(this.fields);
+
+         StringBuilder sb = new StringBuilder();
+
+        for (ObjectField field : allFields) {
+            sb.append( "?,");
+        }
+
+        sb.deleteCharAt(sb.lastIndexOf(","));
+        return sb.toString();
+    }
+
+
+
+
      /**
      * @return the pkfields
      */
@@ -138,7 +197,7 @@ public class ObjectToGenerate {
         sb.deleteCharAt(sb.lastIndexOf(","));
         return sb.toString();
     }
-    
+
     /**
      * @return the pkfields
      */
@@ -165,8 +224,8 @@ public class ObjectToGenerate {
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
-    
-    
+
+
     public String getBasePackage() {
         if(!basePackage.trim().endsWith("."))
         {
@@ -202,8 +261,8 @@ public class ObjectToGenerate {
     public void setServicePackage(String servicePackage) {
         this.servicePackage = servicePackage;
     }
-    
-    
+
+
     public String getWebPath() {
         return webPath;
     }

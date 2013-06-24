@@ -29,7 +29,7 @@ public class CodeGenerator {
             //Read input file and put into a list
             ObjectToGenerate objectToGenerate = readInputFile();
 
-            //code generation 
+            //code generation
 
 
             log.info("Printing: Domain object");
@@ -61,12 +61,38 @@ public class CodeGenerator {
 
             generateJqGrid(objectToGenerate);
 
+            log.info("Printing: queries definition ");
+
+            generateQueries(objectToGenerate);
+
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
     }
-    
+
+    public void generateQueries(ObjectToGenerate objectToGenerate) {
+
+        STGroup group = new STGroupFile("src/main/resources/CRUD_queries.stg");
+
+        group.verbose = true;
+        ST st = null;
+
+
+        st = group.getInstanceOf("CRUD_queries");
+        st.add("objectNameLowerCase", objectToGenerate.getObjectName().toLowerCase());
+        st.add("objectNameUpperCase", objectToGenerate.getObjectName());
+        st.add("tableName", objectToGenerate.getTableName());
+        st.add("tableFieldNamesCommaSeparated", objectToGenerate.getAllColumns_CommaSeparated());
+        st.add("tableFieldNamesCommaSeparatedWithParam", objectToGenerate.getAllFieldsWithQueryParam_commaSeparated());
+        st.add("PKFieldsWithParamANDSeparated", objectToGenerate.getPKFieldsWithQueryParam_SeparatedByAND());
+        st.add("AllfieldsAsQuestionMArks", objectToGenerate.getAllFieldsAsQuestionsMarks());
+
+
+
+        System.out.println(st.render(120));
+    }
+
      public void generateJqGrid(ObjectToGenerate objectToGenerate) {
 
         STGroup group = new STGroupFile("src/main/resources/HtmlForm.stg");
@@ -83,14 +109,14 @@ public class CodeGenerator {
 
             constructorContent.append(st.render());
         }
-        
+
         //erases last comma
         constructorContent.deleteCharAt(constructorContent.lastIndexOf(","));
-        
+
         //generate code for row mapper
 
-        
-        
+
+
         st = group.getInstanceOf("jqGrid");
         st.add("jqGridFields", constructorContent);
 
@@ -427,7 +453,7 @@ public class CodeGenerator {
                     line = line.substring(line.indexOf("<PK>") + "<PK>".length()).trim();
                 }
 
-                //afterwards, we need to split and have faith people read the instructions...    
+                //afterwards, we need to split and have faith people read the instructions...
                 String[] field = line.trim().split("[ |\t]+");
 
                 if (field.length > 2) {
