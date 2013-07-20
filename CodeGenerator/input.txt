@@ -12,37 +12,32 @@
 //BigDecimal field3
 //We replace VARCHAR->String, INT->Integer, Char->Character
 
+
 //table name
-<tableName> empleado
-<objectName> empleado
-<webPath> /operacion/nomina/mantenimiento/empleado
+<tableName> acumulados
+<objectName> acumulados
+<webPath> /operacion/nomina/mantenimiento/acumulados
 <basePackage> com.hcolonial.
 <daoPackage> dao.operacion.nomina
 <domainPackage> model.operacion.nomina
 <servicePackage> controller.operacion.nomina
 
-//fields
-<PK>VARCHAR	empleado
-    VARCHAR	nombre
-    VARCHAR	direccion
-    VARCHAR	colonia
-    VARCHAR	cp
-    VARCHAR	estado_civil
-    VARCHAR	rfc
-    VARCHAR	imss
-    VARCHAR	status_empleado
-    VARCHAR	categoria
-    VARCHAR	contrato
-    VARCHAR	tipo
-    DATE	fecha_ingreso
-    DATE	fecha_baja
-    INT         vacaciones
-    INT         vacaciones_tomadas
-    INT         aguinaldo
-    FLOAT	factor_imss
-    FLOAT	salario
-    CHAR	paga_imss
-    CHAR	paga_ispt
+
+<PK> VARCHAR	empleado
+<PK> INT	nomina
+INT	ano
+DATE	fecha
+FLOAT	percepcion
+FLOAT	deducciones
+FLOAT	ispt
+FLOAT	imss
+FLOAT	infonavit
+INT	dias_laborados
+INT	dias_ausencia
+INT	dias_incapacidad
+INT	horas
+FLOAT	sar
+FLOAT	gravable
 
 
 

@@ -10,13 +10,13 @@
 		</layout>
 	</appender>
 
-       
+
 	<logger name="org.sergvera">
-		<level value="DEBUG" />
+		<level value="INFO" />
 	</logger>
 
 	<root>
-		<level value="DEBUG" />
+		<level value="INFO" />
 		<appender-ref ref="CONSOLE" />
 	</root>
 
