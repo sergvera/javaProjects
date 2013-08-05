@@ -14,30 +14,17 @@
 
 
 //table name
-<tableName> acumulados
-<objectName> acumulados
-<webPath> /operacion/nomina/mantenimiento/acumulados
+<tableName> pagos
+<objectName> pagos
+<webPath> /operacion/nomina/especiales/pagos
 <basePackage> com.hcolonial.
 <daoPackage> dao.operacion.nomina
 <domainPackage> model.operacion.nomina
 <servicePackage> controller.operacion.nomina
 
-
+<PK> VARCHAR	movimiento_nomina
 <PK> VARCHAR	empleado
 <PK> INT	nomina
-INT	ano
-DATE	fecha
-FLOAT	percepcion
-FLOAT	deducciones
-FLOAT	ispt
-FLOAT	imss
-FLOAT	infonavit
-INT	dias_laborados
-INT	dias_ausencia
-INT	dias_incapacidad
-INT	horas
-FLOAT	sar
-FLOAT	gravable
-
-
+FLOAT	cantidad
+FLOAT	importe
 
