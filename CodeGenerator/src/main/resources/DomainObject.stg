@@ -5,6 +5,12 @@ objectFields(fieldType, fieldName) ::=
 private <fieldType> <fieldName>;<\n>
 >>
 
+numericObjectFields(fieldType, fieldName) ::=
+<<
+@NotNull(message="{notEmpty}")
+private <fieldType> <fieldName>;<\n>
+>>
+
 objectConstructors(objectName, allFieldsCommaSeparated, constructorContent) ::= <<
 
 public <objectName>()

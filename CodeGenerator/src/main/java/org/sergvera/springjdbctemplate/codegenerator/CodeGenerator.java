@@ -239,7 +239,8 @@ public class CodeGenerator {
         //object fields
         StringBuffer objectFields = new StringBuffer();
         for (ObjectField field : objectToGenerate.getAllfields()) {
-            st = group.getInstanceOf("objectFields");
+            
+            st = group.getInstanceOf(field.getFieldTemplate());
             st.add("fieldType", field.getTranslatedFieldType());
             st.add("fieldName", field.getFieldName());
 
