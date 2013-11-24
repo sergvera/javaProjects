@@ -14,17 +14,17 @@
 
 
 //table name
-<tableName> pagos
-<objectName> pagos
-<webPath> /operacion/nomina/especiales/pagos
+<tableName> regla_movimiento_nomina_empleado
+<objectName> reglaMovimientoNominaEmpleado
+<webPath> /operacion/nomina/especiales/reglaMovimientoNominaEmpleado
 <basePackage> com.hcolonial.
 <daoPackage> dao.operacion.nomina
 <domainPackage> model.operacion.nomina
 <servicePackage> controller.operacion.nomina
 
-<PK> VARCHAR	movimiento_nomina
 <PK> VARCHAR	empleado
-<PK> INT	nomina
-FLOAT	cantidad
-FLOAT	importe
+<PK> VARCHAR	movimiento_nomina
+VARCHAR regla
+VARCHAR comentario
+DATE fecha_modificacion
 
