@@ -14,17 +14,29 @@
 
 
 //table name
-<tableName> regla_movimiento_nomina_empleado
-<objectName> reglaMovimientoNominaEmpleado
-<webPath> /operacion/nomina/especiales/reglaMovimientoNominaEmpleado
+
+<tableName> acumulados
+<objectName> acumulados
+<webPath> /operacion/nomina/mantenimiento/acumulados
 <basePackage> com.hcolonial.
 <daoPackage> dao.operacion.nomina
 <domainPackage> model.operacion.nomina
 <servicePackage> controller.operacion.nomina
 
+
 <PK> VARCHAR	empleado
-<PK> VARCHAR	movimiento_nomina
-VARCHAR regla
-VARCHAR comentario
-DATE fecha_modificacion
+<PK> INT	nomina
+INT	ano
+DATE	fecha
+FLOAT	percepcion
+FLOAT	deducciones
+FLOAT	ispt
+FLOAT	imss
+FLOAT	infonavit
+INT	dias_laborados
+INT	dias_ausencia
+INT	dias_incapacidad
+INT	horas
+FLOAT	sar
+FLOAT	gravable
 

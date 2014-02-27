@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html ng-app> <!-- IMPORTANT! ng-app is needed.... -->
+    <head>
+        <title>Hello world!</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width">
+        <script src="lib/angular/angular.js"></script>
+        <script>
+            //$scope is a special param that angularjs uses to
+            //pass data between the ctroller and the view
+            function HelloWorldCtrl($scope)
+            {
+                $scope.helloMsg="Hello World!";
+            }
+
+        </script>
+    </head>
+    <body>
+        <h1 ng-controller="HelloWorldCtrl">{{helloMsg}}</h1>
+
+    </body>
+</html>
